@@ -33,7 +33,7 @@ namespace Testing.Controllers
             Product prod = _repo.GetProduct(id);
             if (prod == null)
             {
-                return View("ProductNotFound");
+                return View("Index");
             }
             return View(prod);
         }
@@ -56,5 +56,12 @@ namespace Testing.Controllers
             _repo.InsertProduct(productToInsert);
             return RedirectToAction("Index");
         }
+        
+        public IActionResult DeleteProduct(Product product)
+        {
+            _repo.DeleteProduct(product);
+            return RedirectToAction("Index");
+        }
+
     }
 }
