@@ -30,5 +30,22 @@ public class ProductRepository : IProductRepository
             new {name = product.Name, price = product.Price, id = product.ProductId });
     }
     
+    public void InsertProduct(Product productToInsert)
+    {
+        _conn.Execute("INSERT INTO products (NAME, PRICE, CATEGORYID) VALUES (@name, @price, @categoryID);",
+            new {name = productToInsert.Name, price = productToInsert.Price, categoryID = productToInsert.CategoryId });
+    }
+
+    public IEnumerable<Category> GetCategories()
+    {
+        return _conn.Query<Category>("SELECT * FROM categories;");
+    }
     
+    public Product AssignCategory()
+    {
+        var categoryList = GetCategories();
+        var product = new Product();
+        product.Categories = categoryList;
+        return product;
+    }
 }
